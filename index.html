@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Vishal Kumar">
+    <title>Login Page with Some Animation</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        body {
+            background-color: #060220;
+        }
+
+        .container {
+            width: 31.25em;
+            background-color: #060220;
+            padding: 1.4em 3.75em;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 0.7em;
+            box-shadow: 0 1em 4em rgba(212, 234, 255, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            color: white;
+            margin: 0 0 30px;
+            padding: 0;
+        }
+
+        input,#submit {
+            border: none;
+            outline: none;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            background-color: transparent;
+            margin-bottom: 2em;
+            font-size: 18px;
+            padding: 1em 0 0.5em 0.5em;
+            border-bottom: 2px solid #202020;
+        }
+
+        #submit {
+            position: relative;
+            left: 0;
+            font-size: 1.1em;
+            width: 6em;
+            background-color: #011a30;
+            color: white;
+            padding: 0.6em 0;
+            margin-top: 2em;
+            border-radius: 10em;
+        }
+
+        #message-ref {
+            font-size: 0.9em;
+            margin-top: 1.5em;
+            color: #0e7f0e;
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Login Page With Some Animation</h2>
+        <input type="text" placeholder="Username" id="username" />
+        <input type="password" placeholder="Password" id="password" />
+        <button id="submit">Submit</button>
+        <p id="message-ref">Signed Up Successfully!</p>
+    </div>
+
+</body>
+
+
+<script>
+  let usernameRef = document.getElementById("username");
+let passwordRef = document.getElementById("password");
+let submitBtn = document.getElementById("submit");
+let messageRef = document.getElementById("message-ref");
+
+let isUsernameValid = () => {
+  const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]{3,32}/gi;
+  return usernameRegex.test(usernameRef.value);
+};
+
+let isPasswordValid = () => {
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+  return passwordRegex.test(passwordRef.value);
+};
+
+const setInvalidInputStyle = (inputRef) => {
+  inputRef.style.borderColor = "#fe2e2e";
+  inputRef.style.backgroundColor = "#ffc2c2";
+};
+
+const setValidInputStyle = (inputRef) => {
+  inputRef.style.borderColor = "#34bd34";
+  inputRef.style.backgroundColor = "#c2ffc2";
+};
+
+usernameRef.addEventListener("input", () => {
+  if (!isUsernameValid()) {
+    messageRef.style.visibility = "hidden";
+    setInvalidInputStyle(usernameRef);
+  } else {
+    setValidInputStyle(usernameRef);
+  }
+});
+
+passwordRef.addEventListener("input", () => {
+  if (!isPasswordValid()) {
+    messageRef.style.visibility = "hidden";
+    setInvalidInputStyle(passwordRef);
+  } else {
+    setValidInputStyle(passwordRef);
+  }
+});
+
+submitBtn.addEventListener("mouseover", () => {
+  if (!isUsernameValid() || !isPasswordValid()) {
+    let containerRect = document
+      .querySelector(".container")
+      .getBoundingClientRect();
+    let submitRect = submitBtn.getBoundingClientRect();
+    let offset = submitRect.left - containerRect.left;
+    console.log(offset);
+    submitBtn.style.transform = offset <= 100 ? "translateX(16.25em)" : "translateX(0)";
+  }
+});
+
+submitBtn.addEventListener("click", () => {
+  messageRef.style.visibility = "visible";
+});
+
+
+</script>
+
+</html>
